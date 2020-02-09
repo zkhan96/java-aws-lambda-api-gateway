@@ -17,6 +17,8 @@ The AWS Toolkit is an open source plug-in for popular IDEs that uses the SAM CLI
 * [VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/welcome.html)
 * [Visual Studio](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/welcome.html)
 
+N.B: If you're running IntelliJ, you may need to right click the build.gradle and import it manually.
+
 ## Deploy the sample application
 
 The Serverless Application Model Command Line Interface (SAM CLI) is an extension of the AWS CLI that adds functionality for building and testing Lambda applications. It uses Docker to run your functions in an Amazon Linux environment that matches Lambda. It can also emulate your application's build environment and API.
@@ -59,8 +61,16 @@ Test a single function by invoking it directly with a test event. An event is a 
 Run functions locally and invoke them with the `sam local invoke` command.
 
 ```bash
-sam-app$ sam local invoke HelloWorldFunction --event events/event.json
+sam-app$ sam local invoke HelloWorldFunction --event event-encoded.json
 ```
+
+The SAM CLI is able to generate events as such for you:
+```bash
+sam-app$ sam local generate-event apigateway aws-proxy --method POST --body "{ 'name': 'zohaib' }" >> event.json
+```
+
+This is going to create an event where the body is base64 encoded, bear in mind that for unit testing, you will need to 
+paste in the unencoded version into the `body` field.
 
 The SAM CLI can also emulate your application's API. Use the `sam local start-api` to run the API locally on port 3000.
 
@@ -68,6 +78,8 @@ The SAM CLI can also emulate your application's API. Use the `sam local start-ap
 sam-app$ sam local start-api
 sam-app$ curl http://localhost:3000/
 ```
+
+You may import the Postman collection to use the endpoint I created
 
 The SAM CLI reads the application template to determine the API's routes and the functions that they invoke. The `Events` property on each function's definition includes the route and method for each path.
 
@@ -77,7 +89,7 @@ The SAM CLI reads the application template to determine the API's routes and the
           Type: Api
           Properties:
             Path: /hello
-            Method: get
+            Method: post
 ```
 
 ## Add a resource to your application

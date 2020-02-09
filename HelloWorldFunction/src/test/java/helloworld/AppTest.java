@@ -28,13 +28,13 @@ public class AppTest {
         JSONObject eventRequest = objectMapper.readValue(getClass().getResource("/test-event-unencoded.json"), JSONObject.class);
 
         // When
-        GatewayResponse<ResponseGreeting> result = app.handleRequest(eventRequest, null);
+        GatewayResponse result = app.handleRequest(eventRequest, null);
 
         // Then
         assertEquals(result.getStatusCode(), 200);
         assertEquals(result.getHeaders().get("Content-Type"), "application/json");
         ResponseGreeting expectedResponseGreeting = new ResponseGreeting(new NameRequest("zohaib"));
-        ResponseGreeting responseGreeting = result.getBody();
+        ResponseGreeting responseGreeting = objectMapper.readValue(result.getBody(), ResponseGreeting.class);
         assertEquals(expectedResponseGreeting, responseGreeting);
         assertEquals("Hello zohaib", responseGreeting.getMessage());
     }

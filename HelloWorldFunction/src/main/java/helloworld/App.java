@@ -17,14 +17,14 @@ import java.util.Map;
  *
  * @author Zohaib Khan
  */
-public class App implements RequestHandler<JSONObject, GatewayResponse<ResponseGreeting>> {
+public class App implements RequestHandler<JSONObject, GatewayResponse> {
 
     /**
      * @param request This takes a JSONObject request (example in test resources).
      *                The body in the request can be parsed into an object
      * @return GatewayResponse pojo which follows the convention for how a response from a Lambda should look like.
      */
-    public GatewayResponse<ResponseGreeting> handleRequest(final JSONObject request, final Context context) {
+    public GatewayResponse handleRequest(final JSONObject request, final Context context) {
         try {
             Map<String, String> headers = new HashMap<>();
             headers.put("Content-Type", "application/json");
@@ -32,7 +32,7 @@ public class App implements RequestHandler<JSONObject, GatewayResponse<ResponseG
             ObjectMapper om = new ObjectMapper();
             NameRequest nameRequest = om.readValue(request.get("body").toString(), NameRequest.class);
             ResponseGreeting responseGreeting = new ResponseGreeting(nameRequest);
-            return new GatewayResponse<>(responseGreeting, headers, 200);
+            return new GatewayResponse(om.writeValueAsString(responseGreeting), headers, 200);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

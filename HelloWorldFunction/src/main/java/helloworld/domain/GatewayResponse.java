@@ -10,9 +10,12 @@ import java.util.Map;
  */
 @AllArgsConstructor
 @Data
-public class GatewayResponse<T> {
+public class GatewayResponse {
 
-    private final T body;
+    /**
+     * response body *must* be a String, not a POJO
+     */
+    private final String body;
     private final Map<String, String> headers;
     private final int statusCode;
 }
