@@ -27,12 +27,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/hello",
-					"protocol": "http",
+					"raw": "{{lambdaUrl}}/hello",
 					"host": [
-						"localhost"
+						"{{lambdaUrl}}"
 					],
-					"port": "3000",
 					"path": [
 						"hello"
 					]
