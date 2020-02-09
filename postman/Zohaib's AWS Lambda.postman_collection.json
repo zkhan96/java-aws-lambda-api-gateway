@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "352c421c-5719-4c60-9dc0-6dc0edc95678",
+		"name": "Zohaib's AWS Lambda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Zohaib's Lambda POST Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"zohaib\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/hello",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"hello"
+					]
+				},
+				"description": "This is a request with a body that gets encoded by the APIGateway Proxy, and decoded at the entrypoint of the AWS Lambda."
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
