@@ -1,7 +1,7 @@
 package helloworld;
 
+import com.amazonaws.services.lambda.runtime.events.APIGatewayV2ProxyResponseEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import helloworld.domain.GatewayResponse;
 import helloworld.domain.NameRequest;
 import helloworld.domain.ResponseGreeting;
 import org.json.simple.JSONObject;
@@ -28,7 +28,7 @@ public class AppTest {
         JSONObject eventRequest = objectMapper.readValue(getClass().getResource("/test-event-unencoded.json"), JSONObject.class);
 
         // When
-        GatewayResponse result = app.handleRequest(eventRequest, null);
+        APIGatewayV2ProxyResponseEvent result = app.handleRequest(eventRequest, null);
 
         // Then
         assertEquals(result.getStatusCode(), 200);
